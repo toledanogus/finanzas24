@@ -1,23 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
 import { setConceptosBanamex } from "../store/slices/banamexSlice";
 import { useEffect, useState } from "react";
 import { getMsi } from "../store/slices/thunks";
+import { RegistroBanamex } from "./components/RegistroBanamex";
 
 export const BanamexPage = () => {
   const { conceptosBanamex } = useSelector((state) => state.getMsi);
-  const dispatch = useDispatch();
   const { quincena } = useSelector((state) => state.generales);
+  const { redibujar } = useSelector((state) => state.registroBanamex);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getMsi());
-  }, []);
+  }, [dispatch, redibujar]);
+
+
 
   return (
     <>
       <div>BanamexPage</div>
       <h3>Meses sin intereses</h3>
       <h3>{quincena}</h3>
-
       <table>
         <thead>
           <tr>
@@ -42,8 +46,7 @@ export const BanamexPage = () => {
           ))}
         </tbody>
       </table>
-      <button >Clic</button>
-      {/*  { <div>{conceptosBanamex}</div>} */}
+      <RegistroBanamex />
     </>
   );
 };

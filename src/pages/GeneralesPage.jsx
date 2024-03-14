@@ -7,6 +7,7 @@ import {
 } from "../store/slices/generalesSlice";
 import { useFetch } from "../hooks/useFetch";
 import { RegistrarGasto } from "./components/RegistrarGasto";
+import { useNavigate } from "react-router-dom";
 
 export const GeneralesPage = () => {
   const { quincena, conceptos, pagados, redibujar } = useSelector(
@@ -21,7 +22,7 @@ export const GeneralesPage = () => {
   const [mesLocalStorage, setMesLocalStorage] = useState("1Enero");
   const [url, setUrl] = useState("./php/test.php");
   const { data, hasError, isLoading } = useFetch(url);
-  
+  const navigate = useNavigate();
 
   /* FUNCIONES**************************************************************** */
 
@@ -58,6 +59,10 @@ export const GeneralesPage = () => {
     await dispatch(sendPagados());
     setDatosCargados(false);
   };
+
+  const aBanamex = () => {
+    navigate('/banamex');
+  }
 
   /* EFECTOS *******************************************************/
   useEffect(() => {
@@ -138,6 +143,7 @@ export const GeneralesPage = () => {
       <button onClick={CambiarUrl}>CambiarUrl</button>
       <RegistrarGasto />
       <div>{redibujar}</div>
+      <button onClick={aBanamex}>A Banamex</button>
     </>
   );
 };
