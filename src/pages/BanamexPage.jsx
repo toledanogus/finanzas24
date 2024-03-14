@@ -4,6 +4,7 @@ import { setConceptosBanamex } from "../store/slices/banamexSlice";
 import { useEffect, useState } from "react";
 import { getMsi } from "../store/slices/thunks";
 import { RegistroBanamex } from "./components/RegistroBanamex";
+import { calcularPagoMsi } from "./funciones/calcularPagoBanamex";
 
 export const BanamexPage = () => {
   const { conceptosBanamex } = useSelector((state) => state.getMsi);
@@ -15,6 +16,9 @@ export const BanamexPage = () => {
     dispatch(getMsi());
   }, [dispatch, redibujar]);
 
+useEffect(() => {
+  calcularPagoMsi();
+}, []);
 
 
   return (
