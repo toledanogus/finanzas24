@@ -69,7 +69,7 @@ export const BanamexPage = () => {
                 <td>{concepto[3]}</td>
                 <td>{concepto[4]}</td>
                 <td></td>
-                <td>{`$ ${mensualidadPagar[indice1]}`}</td>
+                <td>{`$ ${mensualidad[indice1]}`}</td>
               </tr>
             )
           )}
