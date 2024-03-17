@@ -5,9 +5,9 @@ $json_data = file_get_contents("php://input");
 $x = json_decode($json_data);
 require 'switch.php';
 
-mysqli_query($conn, "INSERT INTO banamexmsi (tipo, Concepto, cantidad, MSI, Mes) VALUES ('MSI', '".$x->newConcept."', '".$x->newValue."', '".$x->aMeses."', $quin)");
+mysqli_query($conn, "INSERT INTO banamexmsi (tipo, Concepto, cantidad, MSI, MesRegistro, MesPagar) VALUES ('MSI', '".$x->newConcept."', '".$x->newValue."', '".$x->aMeses."', $quin, 1)");
 
-$respuesta = mysqli_query($conn, "SELECT Concepto, cantidad, MSI FROM banamexmsi WHERE Mes = $quin");
+$respuesta = mysqli_query($conn, "SELECT Concepto, cantidad, MSI, MesRegistro FROM banamexmsi WHERE MSI >= 2");
 
 $row = mysqli_fetch_all($respuesta);
 //echo $row;

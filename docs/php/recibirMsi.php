@@ -6,7 +6,7 @@ $x = json_decode($json_data);
 
 require 'switch.php';
 //$respuesta = mysqli_query($conn, "SELECT comida, garrafones, despensa, ahorro, gas, luz, psic, agua, Yansen, Gustavo FROM 01generales WHERE tipoquincena= '".$x->tipo."'");
-$respuesta = mysqli_query($conn, "SELECT tipo, Concepto, cantidad, MSI, Mes, pagado FROM banamexmsi WHERE Mes = $quin");
+$respuesta = mysqli_query($conn, "SELECT tipo, Concepto, cantidad, MSI, MesRegistro FROM banamexmsi WHERE MesRegistro = $quin || MSI >= 2");
 
 $row = mysqli_fetch_all($respuesta);
 //echo $row;
