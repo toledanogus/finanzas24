@@ -140,7 +140,10 @@ let qRegistro, restantes, debo;
         restantes = Math.floor((quin)/2)+2-qRegistro;
       }
 //debo = mesD2 Total    mesD2/mesD3 parcialidades
-      debo = (mesD[2]-(mesD[2]/mesD[3])*restantes+(mesD[2]/mesD[3])).toFixed(2);
+      debo = (mesD[2]-(mesD[2]/mesD[3])*restantes+(mesD[2]/mesD[3]));
+      if (debo %  1 != 0) {
+        debo = debo.toFixed(2);
+      }
       
 
       return [msi, concepto, cantidad, aCuantosMeses, qRegistro, apareceMsi, restantes, debo];
@@ -211,7 +214,7 @@ let qRegistro, restantes, debo;
                     <td>{`$ ${concepto[2]}`}</td>
                     <td>{concepto[3]}</td>
                     <td>{concepto[4]}</td>
-                    <td>{concepto[7]}</td>
+                    <td>{`$ ${concepto[7]}`}</td>
                     <td>{`$ ${mensualidad[indice1]}`}</td>
                     <td>{concepto[6]}</td>
                   </tr>
@@ -222,6 +225,17 @@ let qRegistro, restantes, debo;
             }
           )}
         </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total</td>
+            <td>{`$`}</td>
+            <td></td>
+          </tr>
+        </tfoot>
       </table>
       <br />
       <br />
