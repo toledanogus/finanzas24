@@ -20,6 +20,7 @@ export const BanamexPage = () => {
   const dispatch = useDispatch();
   const [mensualidadPagar, setMensualidadPagar] = useState([]);
   const [newConcept, setNewConcept] = useState([]);
+  const [suma, setSuma] = useState(0);
   let quin;
   let mes;
   //Funciones***************************************************
@@ -110,49 +111,81 @@ export const BanamexPage = () => {
     setMensualidadPagar(mensualidades);
   };
 
+  let apareceMsi = false;
+  let qRegistro, restantes, debo;
 
-let apareceMsi = false;
-let qRegistro, restantes, debo;
-
-
-  const calculoMes = () => { 
+  const calculoMes = () => {
     const nuevoConceptos = Object.entries(conceptosBanamex).map(([, mesD]) => {
       const msi = mesD[0];
       const concepto = mesD[1];
       const cantidad = mesD[2];
       const aCuantosMeses = mesD[3];
-            
+
       if (mesD[4] % 2 === 0) {
         qRegistro = mesD[4] + 2;
       } else {
         qRegistro = mesD[4] + 1;
       }
 
-      if (quin >= qRegistro && quin +1 <= qRegistro+(mesD[3]*2) && mesD[3] >= 2) {
-        apareceMsi=true;
+      if (
+        quin >= qRegistro &&
+        quin + 1 <= qRegistro + mesD[3] * 2 &&
+        mesD[3] >= 2
+      ) {
+        apareceMsi = true;
       } else {
-        apareceMsi= false;
+        apareceMsi = false;
       }
 
       if (quin % 2 === 0) {
-        restantes = Math.floor((quin+1)/2)+2-qRegistro;
+        restantes = Math.floor((quin + 1) / 2) + 2 - qRegistro;
       } else {
-        restantes = Math.floor((quin)/2)+2-qRegistro;
+        restantes = Math.floor(quin / 2) + 2 - qRegistro;
       }
-//debo = mesD2 Total    mesD2/mesD3 parcialidades
-      debo = (mesD[2]-(mesD[2]/mesD[3])*restantes+(mesD[2]/mesD[3]));
-      if (debo %  1 != 0) {
+      //debo = mesD2 Total    mesD2/mesD3 parcialidades
+      debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
+      if (debo % 1 != 0) {
         debo = debo.toFixed(2);
       }
-      
 
-      return [msi, concepto, cantidad, aCuantosMeses, qRegistro, apareceMsi, restantes, debo];
+      return [
+        msi,
+        concepto,
+        cantidad,
+        aCuantosMeses,
+        qRegistro,
+        apareceMsi,
+        restantes,
+        debo,
+      ];
     });
-    console.log(apareceMsi);
-    console.log(`Funcion Nuevo concepto ${nuevoConceptos}`);
+
     setNewConcept(nuevoConceptos);
   };
 
+  const calculoTotal = () => {
+    let arrayTotal = new Array();
+    arrayTotal = Object.entries(conceptosBanamexProcesados).map(
+      ([index, concepto], indice1) => {
+        if (
+          concepto[4] === quin ||
+          concepto[4] === quin - 1 ||
+          concepto[5] === true
+        ) {
+          const ms = Number(mensualidad[indice1]);
+          return ms;
+        } else {
+          return null; // Si no se cumple la condición, retornamos null para no renderizar nada
+        }
+      }
+    );
+    console.log(arrayTotal);
+    setSuma(arrayTotal.reduce(
+      (acumulador, valorActual) => acumulador + valorActual,
+      0
+    ))
+    console.log(suma);
+  };
   //Efectos*********************************************************
 
   useEffect(() => {
@@ -168,6 +201,10 @@ let qRegistro, restantes, debo;
   }, [conceptosBanamex, redibujar]);
 
   useEffect(() => {
+    calculoTotal();
+  }, [conceptosBanamexProcesados, redibujar]);
+
+  useEffect(() => {
     dispatch(setMensualidad({ mensualidad: mensualidadPagar }));
   }, [mensualidadPagar, redibujar]);
 
@@ -178,9 +215,8 @@ let qRegistro, restantes, debo;
   }, [newConcept, redibujar]);
 
   useEffect(() => {
-    console.log(apareceMsi)
+    console.log(apareceMsi);
   }, [newConcept]);
-  
 
   useEffect(() => {
     console.log(`Conceptos Banamex ${conceptosBanamex}`);
@@ -207,7 +243,11 @@ let qRegistro, restantes, debo;
         <tbody>
           {Object.entries(conceptosBanamexProcesados).map(
             ([index, concepto], indice1) => {
-              if (concepto[4] === quin || concepto[4] === quin - 1 || concepto[5] === true) {
+              if (
+                concepto[4] === quin ||
+                concepto[4] === quin - 1 ||
+                concepto[5] === true
+              ) {
                 return (
                   <tr key={index}>
                     <td>{concepto[1]}</td>
@@ -232,7 +272,7 @@ let qRegistro, restantes, debo;
             <td></td>
             <td></td>
             <td>Total</td>
-            <td>{`$`}</td>
+            <td>{`$ ${suma}`}</td>
             <td></td>
           </tr>
         </tfoot>
