@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setConceptosBanamex,
   setMensualidad,
+  setConceptosBanamexProcesados,
 } from "../store/slices/banamexSlice";
 import { useEffect, useState } from "react";
 import { getMsi } from "../store/slices/thunks";
@@ -11,93 +12,94 @@ import { RegistroBanamex } from "./components/RegistroBanamex";
 import { setRedibujar } from "../store/slices/registroBanamex";
 
 export const BanamexPage = () => {
-  const { conceptosBanamex, mensualidad } = useSelector(
-    (state) => state.getMsi
-  );
+  const { conceptosBanamex, conceptosBanamexProcesados, mensualidad } =
+    useSelector((state) => state.getMsi);
   const { quincena } = useSelector((state) => state.generales);
   const { redibujar } = useSelector((state) => state.registroBanamex);
 
   const dispatch = useDispatch();
   const [mensualidadPagar, setMensualidadPagar] = useState([]);
-let quin;
+  const [newConcept, setNewConcept] = useState([]);
+  let quin;
+  let mes;
   //Funciones***************************************************
   switch (quincena) {
     case "1Enero":
-        quin = 1;
-        break;
+      quin = 1;
+      break;
     case "2Enero":
-        quin = 2;
-        break;
+      quin = 2;
+      break;
     case "1Febrero":
-        quin = 3;
-        break;
+      quin = 3;
+      break;
     case "2Febrero":
-        quin = 4;
-        break;
+      quin = 4;
+      break;
     case "1Marzo":
-        quin = 5;
-        break;
+      quin = 5;
+      break;
     case "2Marzo":
-        quin = 6;
-        break;
+      quin = 6;
+      break;
     case "1Abril":
-        quin = 7;
-        break;
+      quin = 7;
+      break;
     case "2Abril":
-        quin = 8;
-        break;
+      quin = 8;
+      break;
     case "1Mayo":
-        quin = 9;
-        break;
+      quin = 9;
+      break;
     case "2Mayo":
-        quin = 10;
-        break;
+      quin = 10;
+      break;
     case "1Junio":
-        quin = 11;
-        break;
+      quin = 11;
+      break;
     case "2Junio":
-        quin = 12;
-        break;
+      quin = 12;
+      break;
     case "1Julio":
-        quin = 13;
-        break;
+      quin = 13;
+      break;
     case "2Julio":
-        quin = 14;
-        break;
+      quin = 14;
+      break;
     case "1Agosto":
-        quin = 15;
-        break;
+      quin = 15;
+      break;
     case "2Agosto":
-        quin = 16;
-        break;
+      quin = 16;
+      break;
     case "1Septiembre":
-        quin = 17;
-        break;
+      quin = 17;
+      break;
     case "2Septiembre":
-        quin = 18;
-        break;
+      quin = 18;
+      break;
     case "1Octubre":
-        quin = 19;
-        break;
+      quin = 19;
+      break;
     case "2Octubre":
-        quin = 20;
-        break;
+      quin = 20;
+      break;
     case "1Noviembre":
-        quin = 21;
-        break;
+      quin = 21;
+      break;
     case "2Noviembre":
-        quin = 22;
-        break;
+      quin = 22;
+      break;
     case "1Diciembre":
-        quin = 23;
-        break;
+      quin = 23;
+      break;
     case "2Diciembre":
-        quin = 24;
-        break;
+      quin = 24;
+      break;
     default:
-        // Valor predeterminado si no coincide con ninguna quincena conocida
-        quin = 0;
-}
+      // Valor predeterminado si no coincide con ninguna quincena conocida
+      quin = 0;
+  }
   const calcularPagoMsi = () => {
     const mensualidades = Object.entries(conceptosBanamex).map(
       ([, cantidad]) => {
@@ -108,17 +110,36 @@ let quin;
     setMensualidadPagar(mensualidades);
   };
 
-  const calculoMes = () => {
-    const mesesOk = Object.entries(conceptosBanamex).map(
-      ([, mesD]) => {
-        const mesNoQ = mesD[3]*2;//Meses a quincenas
-        const mesResta = mesD[4]-quin;//
-        const x = mesNoQ+mesD[4];
-        
-        return x;
+
+let apareceMsi = false;
+
+
+  const calculoMes = () => { 
+    const nuevoConceptos = Object.entries(conceptosBanamex).map(([, mesD]) => {
+      const msi = mesD[0];
+      const concepto = mesD[1];
+      const cantidad = mesD[2];
+      const aCuantosMeses = mesD[3];
+      let qRegistro;
+      
+
+      if (mesD[4] % 2 === 0) {
+        qRegistro = mesD[4] + 2;
+      } else {
+        qRegistro = mesD[4] + 1;
       }
-    );
-    console.log(`FuncionM ${mesesOk}`);
+
+      if (qRegistro >= quin+2 && qRegistro <= qRegistro+(mesD[3]*2) && mesD[3] >= 2) {
+        apareceMsi=true;
+      } else {
+        apareceMsi= false;
+      }
+
+      return [msi, concepto, cantidad, aCuantosMeses, qRegistro, apareceMsi];
+    });
+    console.log(apareceMsi);
+    console.log(`Funcion Nuevo concepto ${nuevoConceptos}`);
+    setNewConcept(nuevoConceptos);
   };
 
   //Efectos*********************************************************
@@ -132,12 +153,29 @@ let quin;
   }, [conceptosBanamex]);
 
   useEffect(() => {
+    calculoMes();
+  }, [conceptosBanamex, redibujar]);
+
+  useEffect(() => {
     dispatch(setMensualidad({ mensualidad: mensualidadPagar }));
   }, [mensualidadPagar, redibujar]);
 
   useEffect(() => {
-    calculoMes();
-  });
+    dispatch(
+      setConceptosBanamexProcesados({ conceptosBanamexProcesados: newConcept })
+    );
+  }, [newConcept, redibujar]);
+
+  useEffect(() => {
+    console.log(apareceMsi)
+  }, [newConcept]);
+  
+
+  useEffect(() => {
+    console.log(`Conceptos Banamex ${conceptosBanamex}`);
+    console.log(`Conceptos Procesados ${conceptosBanamexProcesados}`);
+  }, [conceptosBanamex, conceptosBanamexProcesados]);
+
   return (
     <>
       <div>BanamexPage</div>
@@ -156,17 +194,23 @@ let quin;
           </tr>
         </thead>
         <tbody>
-          {Object.entries(conceptosBanamex).map(
-            ([index, concepto], indice1) => (
-              <tr key={index}>
-                <td>{concepto[1]}</td>
-                <td>{`$ ${concepto[2]}`}</td>
-                <td>{concepto[3]}</td>
-                <td>{concepto[4]}</td>
-                <td></td>
-                <td>{`$ ${mensualidad[indice1]}`}</td>
-              </tr>
-            )
+          {Object.entries(conceptosBanamexProcesados).map(
+            ([index, concepto], indice1) => {
+              if (concepto[4] === quin || concepto[4] === quin - 1 || concepto[5] === true) {
+                return (
+                  <tr key={index}>
+                    <td>{concepto[1]}</td>
+                    <td>{`$ ${concepto[2]}`}</td>
+                    <td>{concepto[3]}</td>
+                    <td>{concepto[4]}</td>
+                    <td></td>
+                    <td>{`$ ${mensualidad[indice1]}`}</td>
+                  </tr>
+                );
+              } else {
+                return null; // Si no se cumple la condición, retornamos null para no renderizar nada
+              }
+            }
           )}
         </tbody>
       </table>
