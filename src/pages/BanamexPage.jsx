@@ -120,6 +120,7 @@ export const BanamexPage = () => {
       const concepto = mesD[1];
       const cantidad = mesD[2];
       const aCuantosMeses = mesD[3];
+      const compradoEn = mesD[5];
 
       if (mesD[4] % 2 === 0) {
         qRegistro = mesD[4] + 2;
@@ -157,6 +158,7 @@ export const BanamexPage = () => {
         apareceMsi,
         restantes,
         debo,
+        compradoEn
       ];
     });
 
@@ -234,7 +236,7 @@ export const BanamexPage = () => {
             <th>Concepto</th>
             <th>Cantidad</th>
             <th>MSI</th>
-            <th>Quincena de Registro</th>
+            <th>Comprado</th>
             <th>Debo</th>
             <th>A pagar</th>
             <th>Mes a Pagar</th>
@@ -253,7 +255,7 @@ export const BanamexPage = () => {
                     <td>{concepto[1]}</td>
                     <td>{`$ ${concepto[2]}`}</td>
                     <td>{concepto[3]}</td>
-                    <td>{concepto[4]}</td>
+                    <td>{concepto[8]}</td>
                     <td>{`$ ${concepto[7]}`}</td>
                     <td>{`$ ${mensualidad[indice1]}`}</td>
                     <td>{concepto[6]}</td>
