@@ -112,6 +112,7 @@ export const BanamexPage = () => {
 
 
 let apareceMsi = false;
+let qRegistro, restantes;
 
 
   const calculoMes = () => { 
@@ -120,9 +121,7 @@ let apareceMsi = false;
       const concepto = mesD[1];
       const cantidad = mesD[2];
       const aCuantosMeses = mesD[3];
-      let qRegistro;
-      
-
+            
       if (mesD[4] % 2 === 0) {
         qRegistro = mesD[4] + 2;
       } else {
@@ -135,7 +134,14 @@ let apareceMsi = false;
         apareceMsi= false;
       }
 
-      return [msi, concepto, cantidad, aCuantosMeses, qRegistro, apareceMsi];
+      if (quin % 2 === 0) {
+        restantes = Math.floor((quin+1)/2)+2-qRegistro;
+      } else {
+        restantes = Math.floor((quin)/2)+2-qRegistro;
+      }
+      
+
+      return [msi, concepto, cantidad, aCuantosMeses, qRegistro, apareceMsi, restantes];
     });
     console.log(apareceMsi);
     console.log(`Funcion Nuevo concepto ${nuevoConceptos}`);
@@ -205,6 +211,7 @@ let apareceMsi = false;
                     <td>{concepto[4]}</td>
                     <td></td>
                     <td>{`$ ${mensualidad[indice1]}`}</td>
+                    <td>{concepto[6]}</td>
                   </tr>
                 );
               } else {
