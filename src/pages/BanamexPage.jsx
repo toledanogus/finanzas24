@@ -129,7 +129,7 @@ let apareceMsi = false;
         qRegistro = mesD[4] + 1;
       }
 
-      if (qRegistro >= quin+2 && qRegistro <= qRegistro+(mesD[3]*2) && mesD[3] >= 2) {
+      if (quin >= qRegistro && quin +1 <= qRegistro+(mesD[3]*2) && mesD[3] >= 2) {
         apareceMsi=true;
       } else {
         apareceMsi= false;
