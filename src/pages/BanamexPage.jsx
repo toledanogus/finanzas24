@@ -123,7 +123,7 @@ export const BanamexPage = () => {
       const concepto = mesD[1];
       const cantidad = mesD[2];
       const aCuantosMeses = mesD[3];
-      const compradoEn = mesD[5];
+      const compradoEn = `Q${mesD[5].replace(/(\d+)([a-zA-Z]+)/, "$1º- $2")}`;
 
       if (mesD[4] % 2 === 0) {
         qRegistro = mesD[4] + 2;
@@ -141,16 +141,26 @@ export const BanamexPage = () => {
         apareceMsi = false;
       }
 
-      if (quin % 2 === 0) {
+      if (mesD[3] >= 2) {
+        if (quin % 2 === 0) {
         restantes = Math.floor((quin + 1) / 2) + 2 - qRegistro;
       } else {
         restantes = Math.floor(quin / 2) + 2 - qRegistro;
       }
+      } else {
+        restantes = 1;
+      }
+
       //debo = mesD2 Total    mesD2/mesD3 parcialidades
-      debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
+      if (mesD[3] >= 2) {
+        debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
       if (debo % 1 != 0) {
         debo = debo.toFixed(2);
       }
+      } else {
+        debo = mesD[2]
+      }
+      
 
       return [
         msi,

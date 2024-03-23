@@ -40,6 +40,9 @@ export const RegistroBanamex = () => {
     dispatch(unaExhibicion({ concepto1: concepto1, cantidad1: cantidad1 }));
     dispatch(writeBanamex1());
     dispatch(setRedibujar({ redibujar: Number(redibujar) + 1 }));
+    setConcepto1('');
+    setCantidad1('');
+    alert('Registro exitoso');
   }
   return (
     <>
@@ -121,6 +124,10 @@ export const RegistroBanamex = () => {
                 );
                 dispatch(writeBanamexMsi());
                 dispatch(setRedibujar({ redibujar: Number(redibujar) + 1 }));
+                setCantidad2('');
+                setConcepto2('');
+                setNumeroMeses('');
+                alert('Registro exitoso');
               } : null}
             >
               Registrar
