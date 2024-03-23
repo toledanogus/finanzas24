@@ -59,7 +59,9 @@ const getCantidad = ({target}) => {
                 <td><input type="number" value={cantidad} onChange={getCantidad}/></td>
             </tr>
             <tr>
-              <td><button onClick={registrarNuevo}>Registrar</button></td>
+              <td><button onClick={
+                concepto != '' && cantidad != '' ?
+                registrarNuevo : null}>Registrar</button></td>
             </tr>
         </tbody>
       </table>

@@ -53,20 +53,22 @@ export const RegistroBanamex = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Concepto</td>
+            <td>Concepto:</td>
             <td>
               <input type="text" value={concepto1} onChange={getConcepto1} />
             </td>
           </tr>
           <tr>
-            <td>Cantidad</td>
+            <td>Cantidad:</td>
             <td>
               <input type="number" value={cantidad1} onChange={getCantidad1} />
             </td>
           </tr>
           <tr>
             <button
-              onClick={registroUnaExhibicion}
+              onClick={
+                concepto1 != "" && cantidad1 != "" ?
+               registroUnaExhibicion : null }
             >
               Registrar
             </button>
@@ -84,19 +86,19 @@ export const RegistroBanamex = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Concepto</td>
+            <td>Concepto:</td>
             <td>
               <input type="text" value={concepto2} onChange={getConcepto2} />
             </td>
           </tr>
           <tr>
-            <td>Cantidad</td>
+            <td>Cantidad:</td>
             <td>
               <input type="number" value={cantidad2} onChange={getCantidad2} />
             </td>
           </tr>
           <tr>
-            <td>Número de meses</td>
+            <td>Número de meses:</td>
             <td>
               <input
                 type="number"
@@ -107,7 +109,9 @@ export const RegistroBanamex = () => {
           </tr>
           <tr>
             <button
-              onClick={() => {
+              onClick={
+                concepto2 !="" && cantidad2 !="" && numeroMeses != "" ?
+                () => {
                 dispatch(
                   mesesSinIntereses({
                     concepto2: concepto2,
@@ -117,7 +121,7 @@ export const RegistroBanamex = () => {
                 );
                 dispatch(writeBanamexMsi());
                 dispatch(setRedibujar({ redibujar: Number(redibujar) + 1 }));
-              }}
+              } : null}
             >
               Registrar
             </button>
