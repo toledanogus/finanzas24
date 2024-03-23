@@ -61,7 +61,7 @@ const getCantidad = ({target}) => {
         </tbody>
       </table>
       <button onClick={registrarNuevo}>Registrar</button>
-      <div>{JSON.stringify(datosJson)}</div>
+      {/* <div>{JSON.stringify(datosJson)}</div> */}
       {/* {<div>{console.log(redibujar)}</div>} */}
     </>
   );

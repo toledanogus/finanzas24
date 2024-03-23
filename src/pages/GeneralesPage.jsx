@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getConceptos, getTotalBanamex, sendPagados } from "../store/slices/thunks";
+import {
+  getConceptos,
+  getTotalBanamex,
+  sendPagados,
+} from "../store/slices/thunks";
 import {
   seleccionQuincenaMes,
   setPagados,
@@ -10,12 +14,9 @@ import { useFetch } from "../hooks/useFetch";
 import { RegistrarGasto } from "./components/RegistrarGasto";
 import { useNavigate } from "react-router-dom";
 
-
-
 export const GeneralesPage = () => {
-  const { quincena, conceptos, pagados, redibujar, totalTemporal2} = useSelector(
-    (state) => state.generales
-  );
+  const { quincena, conceptos, pagados, redibujar, totalTemporal2 } =
+    useSelector((state) => state.generales);
   const dispatch = useDispatch();
   const [checkedItems, setCheckedItems] = useState(new Set());
   //const [total1, setTotal1] = useState(0);
@@ -26,8 +27,6 @@ export const GeneralesPage = () => {
   const [url, setUrl] = useState("./php/test.php");
   const { data, hasError, isLoading } = useFetch(url);
   const navigate = useNavigate();
-
-
 
   /* FUNCIONES**************************************************************** */
 
@@ -44,9 +43,9 @@ export const GeneralesPage = () => {
     }
   };
 
-  const CambiarUrl = () => {
+  /* const CambiarUrl = () => {
     setUrl("./php/test2.php");
-  };
+  }; */
 
   const sumarTotal2 = () => {
     // eslint-disable-next-line no-unused-vars
@@ -66,8 +65,8 @@ export const GeneralesPage = () => {
   };
 
   const aBanamex = () => {
-    navigate('/banamex');
-  }
+    navigate("/banamex");
+  };
 
   /* EFECTOS *******************************************************/
   useEffect(() => {
@@ -88,8 +87,7 @@ export const GeneralesPage = () => {
 
   useEffect(() => {
     dispatch(getTotalBanamex());
-  }, [])
-  
+  }, []);
 
   return (
     <>
@@ -127,10 +125,7 @@ export const GeneralesPage = () => {
               <td>{concepto[2] ? "✓" : "No pagado"}</td>
             </tr>
           ))}
-          <tr>
-            <td> <button onClick={aBanamex}>Banamex</button>  </td>
-            <td>{totalTemporal2}</td>
-          </tr>
+          <tr></tr>
         </tbody>
         <hr />
         <tfoot>
@@ -140,19 +135,36 @@ export const GeneralesPage = () => {
           </tr>
         </tfoot>
       </table>
+
       <button
         onClick={() => {
           enviarPagados().then(() => dispatch(getConceptos()));
         }}
       >
-        Obtener casillas marcadas
+        Registrar Pagos
       </button>
-      <div>{pagados && pagados}</div>
-      <h2>{data}</h2>
-      <button onClick={CambiarUrl}>CambiarUrl</button>
+
+      <table>
+        <thead>
+          <tr>
+            <th colSpan="4">Tarjeta Banamex</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <button onClick={aBanamex}>Banamex</button>{" "}
+            </td>
+            <td>{totalTemporal2}</td>
+          </tr>
+        </tbody>
+      </table>
+      {/*  <div>{pagados && pagados}</div>
+      <h2>{data}</h2> */}
+      {/* <button onClick={CambiarUrl}>CambiarUrl</button> */}
       <RegistrarGasto />
-      <div>{redibujar}</div>
-      <button onClick={aBanamex}>A Banamex</button>
+      {/*  <div>{redibujar}</div>
+      <button onClick={aBanamex}>A Banamex</button> */}
     </>
   );
 };

@@ -212,7 +212,7 @@ export const BanamexPage = () => {
 
   useEffect(() => {
     calculoTotal();
-  }, [conceptosBanamexProcesados, redibujar]);
+  }, );
 
   useEffect(() => {
     dispatch(setMensualidad({ mensualidad: mensualidadPagar }));

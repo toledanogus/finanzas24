@@ -125,6 +125,7 @@ export const writeBanamexMsi = () => {
 export const writeTotalBanamex = () => {
   return async (dispatch, getState) =>{
     const quantity = selectTotalTemporal1(getState());
+    console.log(`Cantidad al Mysql ${quantity}`);
     const quin = selectQuincena(getState());
     
     let jsonwtb = new Object();

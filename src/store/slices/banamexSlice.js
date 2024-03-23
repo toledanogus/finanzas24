@@ -13,7 +13,7 @@ name: 'getMsi',
     conceptosBanamex: [],
     conceptosBanamexProcesados: [],
     mensualidad: [],
-    totalTemporal1:20,
+    totalTemporal1:'',
     
   },
   reducers: {
