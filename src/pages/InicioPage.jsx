@@ -41,7 +41,7 @@ useEffect(() => {
 
   return (
     <>
-      <h2>Selecciona la quincena:</h2>
+      <h3>Selecciona la quincena:</h3>
       <select value={seleccion} onChange={onHandleChange}>
         {meses.map((mes, index) =>
           quincenas.map((quincenas, index2) => (
@@ -58,7 +58,7 @@ useEffect(() => {
     }}>
         Seleccionar
       </button>
-      <div>Quincena: {quincena}</div>
+      {/* <div>Quincena: {quincena}</div> */}
     </>
   );
 };

@@ -68,3 +68,7 @@ h3 {
 .titulotabla{
     background-color: #83D4A9;
 }
+
+select {
+    margin: 20px;
+}
