@@ -27,6 +27,7 @@ export const GeneralesPage = () => {
   const [url, setUrl] = useState("./php/test.php");
   const { data, hasError, isLoading } = useFetch(url);
   const navigate = useNavigate();
+  const [quincenaOk, setQuincenaOk] = useState('');
 
   /* FUNCIONES**************************************************************** */
 
@@ -89,14 +90,18 @@ export const GeneralesPage = () => {
     dispatch(getTotalBanamex());
   }, []);
 
+  useEffect(() => {
+    setQuincenaOk(quincena)
+  }, []);
+  
+
   return (
     <>
-      <div>GeneralesPage</div>
-      <div>{quincena}</div>
+      <h3>{`Quincena: ${quincenaOk.replace(/(\d+)([a-zA-Z]+)/, "$1º $2")}`}</h3>
       <table>
         <thead>
           <tr>
-            <th colSpan="4" id="titulo">
+            <th colSpan="4" id="titulo" className="titulotabla">
               Gastos permanentes
             </th>
           </tr>
@@ -111,7 +116,11 @@ export const GeneralesPage = () => {
           {Object.entries(conceptos).map(([index, concepto]) => (
             <tr key={index}>
               <td>{concepto[0]}</td>
-              <td>{concepto[1]}</td>
+              <td>
+                {concepto[1] && concepto[1]
+                  ? `$${concepto[1].toLocaleString()}`
+                  : '—'}
+              </td>
               <td>
                 {concepto[2] === 0 ? (
                   <input
@@ -122,27 +131,31 @@ export const GeneralesPage = () => {
                   />
                 ) : null}
               </td>
-              <td>{concepto[2] ? "✓" : "No pagado"}</td>
+              <td>{concepto[2] ? <span className="arrow">✓</span>  : "No pagado"}</td>
+
             </tr>
           ))}
-          <tr></tr>
         </tbody>
-        <hr />
         <tfoot>
           <tr>
-            <td>Total</td>
-            <td>{total2}</td>
+            <td className="total">Total</td>
+            <td className="total">{total2 && total2 ? `$${total2.toLocaleString()}` : null}</td>
           </tr>
-        </tfoot>
-      </table>
-
-      <button
+          <tr>
+            <td>
+              <button
         onClick={() => {
           enviarPagados().then(() => dispatch(getConceptos()));
         }}
       >
         Registrar Pagos
       </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      
 
       <table>
         <thead>
@@ -155,7 +168,11 @@ export const GeneralesPage = () => {
             <td>
               <button onClick={aBanamex}>Banamex</button>{" "}
             </td>
-            <td>{totalTemporal2}</td>
+            <td className="banamextotal">
+              {totalTemporal2 && totalTemporal2
+                ? `$${totalTemporal2.toLocaleString()}`
+                : null}
+            </td>
           </tr>
         </tbody>
       </table>

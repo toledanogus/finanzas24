@@ -235,9 +235,8 @@ export const BanamexPage = () => {
 
   return (
     <>
-      <div>BanamexPage</div>
-      <h3>Meses sin intereses</h3>
-      <h3>{quincena}</h3>
+      <h3>Banamex</h3>
+      <h3>{`Quincena: ${quincena.replace(/(\d+)([a-zA-Z]+)/, "$1º $2")}`}</h3>
       <table>
         <thead>
           <tr>
@@ -281,17 +280,14 @@ export const BanamexPage = () => {
             <td></td>
             <td></td>
             <td></td>
-            <td>Total</td>
-            <td>{`$ ${suma}`}</td>
+            <td className="total">Total</td>
+            <td className="total">{`$ ${suma}`}</td>
             <td></td>
           </tr>
         </tfoot>
       </table>
-      <br />
-      <br />
-      <br />
       <RegistroBanamex />
-      <div>mensualidad del slice {mensualidad}</div>
+      {/* <div>mensualidad del slice {mensualidad}</div> */}
       <button onClick={enviarTotal}>Enviar a Base</button>
     </>
   );

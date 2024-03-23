@@ -46,21 +46,24 @@ const getCantidad = ({target}) => {
       <table>
         <thead>
             <tr>
-                <th>Ingresar nuevo gasto</th>
+                <th colSpan="2">Ingresar nuevo gasto</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Concepto</td>
+                <td>Concepto:</td>
                 <td><input type="text" value={concepto} onChange={getConcepto}/></td>
             </tr>
             <tr>
-                <td>Cantidad</td>
+                <td>Cantidad:</td>
                 <td><input type="number" value={cantidad} onChange={getCantidad}/></td>
+            </tr>
+            <tr>
+              <td><button onClick={registrarNuevo}>Registrar</button></td>
             </tr>
         </tbody>
       </table>
-      <button onClick={registrarNuevo}>Registrar</button>
+      
       {/* <div>{JSON.stringify(datosJson)}</div> */}
       {/* {<div>{console.log(redibujar)}</div>} */}
     </>
