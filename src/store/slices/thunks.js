@@ -1,5 +1,5 @@
-import { selectPagados, selectQuincena, setConceptos } from "./generalesSlice";
-import { setConceptosBanamex } from "./banamexSlice";
+import { selectPagados, selectQuincena, setConceptos, setTotalTemporal2 } from "./generalesSlice";
+import { selectTotalTemporal1, setConceptosBanamex, setTotalTemporal1 } from "./banamexSlice";
 import { banamexApi } from "../../api/banamexApi";
 import {
   selectCantidad1,
@@ -10,6 +10,8 @@ import {
   unaExhibicion,
 } from "./registroBanamex";
 import {registroBanamexApi} from "../../api/registroBanamexApi";
+
+
 
 export const getConceptos = () => {
   // eslint-disable-next-line no-unused-vars
@@ -120,4 +122,30 @@ export const writeBanamexMsi = () => {
   };
 };
 
+export const writeTotalBanamex = () => {
+  return async (dispatch, getState) =>{
+    const quantity = selectTotalTemporal1(getState());
+    const quin = selectQuincena(getState());
+    
+    let jsonwtb = new Object();
+    jsonwtb['cantidad']= quantity;
+    jsonwtb['quincena']= quin;
+    
+    const {data} = await registroBanamexApi.post(`/registrarTotal.php`, jsonwtb);
+    console.log(JSON.stringify(data));
+  };
+};
+
+export const getTotalBanamex = () => {
+  return async (dispatch, getState) =>{
+    const quin = selectQuincena(getState());
+    
+    let jsonwtb = new Object();
+    jsonwtb['quincena']= quin;
+    
+    const {data} = await registroBanamexApi.post(`/getTotalBanamex.php`, jsonwtb);
+    console.log(JSON.stringify(data));
+    dispatch(setTotalTemporal2(data));
+  };
+}
 

@@ -5,11 +5,14 @@ import {
   setConceptosBanamex,
   setMensualidad,
   setConceptosBanamexProcesados,
+  setTotalTemporal1,
 } from "../store/slices/banamexSlice";
 import { useEffect, useState } from "react";
-import { getMsi } from "../store/slices/thunks";
+import { getMsi, writeTotalBanamex } from "../store/slices/thunks";
 import { RegistroBanamex } from "./components/RegistroBanamex";
 import { setRedibujar } from "../store/slices/registroBanamex";
+
+
 
 export const BanamexPage = () => {
   const { conceptosBanamex, conceptosBanamexProcesados, mensualidad } =
@@ -187,7 +190,12 @@ export const BanamexPage = () => {
       0
     ))
     console.log(suma);
+    dispatch(setTotalTemporal1(suma));
   };
+
+  const enviarTotal = () => {
+    dispatch(writeTotalBanamex());
+  }
   //Efectos*********************************************************
 
   useEffect(() => {
@@ -284,6 +292,7 @@ export const BanamexPage = () => {
       <br />
       <RegistroBanamex />
       <div>mensualidad del slice {mensualidad}</div>
+      <button onClick={enviarTotal}>Enviar a Base</button>
     </>
   );
 };

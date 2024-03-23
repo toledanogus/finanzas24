@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getConceptos, sendPagados } from "../store/slices/thunks";
+import { getConceptos, getTotalBanamex, sendPagados } from "../store/slices/thunks";
 import {
   seleccionQuincenaMes,
   setPagados,
+  setTotalTemporal2,
 } from "../store/slices/generalesSlice";
 import { useFetch } from "../hooks/useFetch";
 import { RegistrarGasto } from "./components/RegistrarGasto";
 import { useNavigate } from "react-router-dom";
 
+
+
 export const GeneralesPage = () => {
-  const { quincena, conceptos, pagados, redibujar } = useSelector(
+  const { quincena, conceptos, pagados, redibujar, totalTemporal2} = useSelector(
     (state) => state.generales
   );
   const dispatch = useDispatch();
@@ -23,6 +26,8 @@ export const GeneralesPage = () => {
   const [url, setUrl] = useState("./php/test.php");
   const { data, hasError, isLoading } = useFetch(url);
   const navigate = useNavigate();
+
+
 
   /* FUNCIONES**************************************************************** */
 
@@ -81,10 +86,10 @@ export const GeneralesPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkedItems, redibujar]);
 
-  /* useEffect(() => {
-    
-  }, [redibujar]);
-   */
+  useEffect(() => {
+    dispatch(getTotalBanamex());
+  }, [])
+  
 
   return (
     <>
@@ -122,6 +127,10 @@ export const GeneralesPage = () => {
               <td>{concepto[2] ? "✓" : "No pagado"}</td>
             </tr>
           ))}
+          <tr>
+            <td> <button onClick={aBanamex}>Banamex</button>  </td>
+            <td>{totalTemporal2}</td>
+          </tr>
         </tbody>
         <hr />
         <tfoot>
