@@ -12,8 +12,6 @@ import { getMsi, writeTotalBanamex } from "../store/slices/thunks";
 import { RegistroBanamex } from "./components/RegistroBanamex";
 import { setRedibujar } from "../store/slices/registroBanamex";
 
-
-
 export const BanamexPage = () => {
   const { conceptosBanamex, conceptosBanamexProcesados, mensualidad } =
     useSelector((state) => state.getMsi);
@@ -115,7 +113,7 @@ export const BanamexPage = () => {
   };
 
   let apareceMsi = false;
-  let qRegistro, restantes, debo;
+  let qRegistro, restantes, debo, quinAMes;
 
   const calculoMes = () => {
     const nuevoConceptos = Object.entries(conceptosBanamex).map(([, mesD]) => {
@@ -125,43 +123,54 @@ export const BanamexPage = () => {
       const aCuantosMeses = mesD[3];
       const compradoEn = `Q${mesD[5].replace(/(\d+)([a-zA-Z]+)/, "$1º- $2")}`;
 
+
       if (mesD[4] % 2 === 0) {
-        qRegistro = mesD[4] + 2;
+        qRegistro = Math.floor((mesD[4] + 1) / 2) + 2;
+        console.log(`qRegistro par ${qRegistro}`);
       } else {
-        qRegistro = mesD[4] + 1;
+        qRegistro = Math.floor(mesD[4] / 2) + 2;
+        console.log(`qRegistro non ${qRegistro}`);
       }
 
+
+
+      
+      /*  if (quin % 2 === 0 && mesD[3] >= 2) {
+        quinAMes = 
+      } */
+      
+      if (quin % 2 === 0 && mesD[3] >= 2) {
+        
+        quinAMes = Math.floor((quin + 1) / 2) + 1;
+        console.log(`quinAMes Par  ${quinAMes}`);
+        restantes= quinAMes - qRegistro +1;
+        /* console.log(`qRegistro para TRABAJAR ${qRegistro} quin ${quin}`); */
+      } else if (quin % 2 != 0 && mesD[3] >= 2) {
+        quinAMes = Math.floor(quin / 2) + 1;
+        console.log(`quinAMes Non  ${quinAMes}`);
+        restantes= quinAMes - qRegistro +1;
+      } else {
+        restantes = 1;
+      }
+      
+      //debo = mesD2 Total    mesD2/mesD3 parcialidades
+      if (mesD[3] >= 2) {
+        debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
+        if (debo % 1 != 0) {
+          debo = debo.toFixed(2);
+        }
+      } else {
+        debo = mesD[2];
+      }
+      
       if (
-        quin >= qRegistro &&
-        quin + 1 <= qRegistro + mesD[3] * 2 &&
+        quinAMes >= qRegistro && quinAMes + 1 <= qRegistro + mesD[3] &&
         mesD[3] >= 2
       ) {
         apareceMsi = true;
       } else {
         apareceMsi = false;
       }
-
-      if (mesD[3] >= 2) {
-        if (quin % 2 === 0) {
-        restantes = Math.floor((quin + 1) / 2) + 2 - qRegistro;
-      } else {
-        restantes = Math.floor(quin / 2) + 2 - qRegistro;
-      }
-      } else {
-        restantes = 1;
-      }
-
-      //debo = mesD2 Total    mesD2/mesD3 parcialidades
-      if (mesD[3] >= 2) {
-        debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
-      if (debo % 1 != 0) {
-        debo = debo.toFixed(2);
-      }
-      } else {
-        debo = mesD[2]
-      }
-      
-
       return [
         msi,
         concepto,
@@ -171,7 +180,7 @@ export const BanamexPage = () => {
         apareceMsi,
         restantes,
         debo,
-        compradoEn
+        compradoEn,
       ];
     });
 
@@ -195,17 +204,19 @@ export const BanamexPage = () => {
       }
     );
     console.log(arrayTotal);
-    setSuma(arrayTotal.reduce(
-      (acumulador, valorActual) => acumulador + valorActual,
-      0
-    ))
+    setSuma(
+      arrayTotal.reduce(
+        (acumulador, valorActual) => acumulador + valorActual,
+        0
+      )
+    );
     console.log(suma);
     dispatch(setTotalTemporal1(suma));
   };
 
   const enviarTotal = () => {
     dispatch(writeTotalBanamex());
-  }
+  };
   //Efectos*********************************************************
 
   useEffect(() => {
@@ -222,7 +233,7 @@ export const BanamexPage = () => {
 
   useEffect(() => {
     calculoTotal();
-  }, );
+  });
 
   useEffect(() => {
     dispatch(setMensualidad({ mensualidad: mensualidadPagar }));
@@ -263,8 +274,8 @@ export const BanamexPage = () => {
           {Object.entries(conceptosBanamexProcesados).map(
             ([index, concepto], indice1) => {
               if (
-                concepto[4] === quin ||
-                concepto[4] === quin - 1 ||
+                concepto[4] === quinAMes ||
+                concepto[4] === quinAMes - 1 ||
                 concepto[5] === true
               ) {
                 return (
@@ -275,7 +286,7 @@ export const BanamexPage = () => {
                     <td>{concepto[8]}</td>
                     <td>{`$ ${concepto[7]}`}</td>
                     <td>{`$ ${mensualidad[indice1]}`}</td>
-                    <td>{concepto[6]}</td>
+                    <td>{`M ${concepto[6]}`}</td>
                   </tr>
                 );
               } else {
