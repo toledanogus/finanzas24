@@ -286,7 +286,7 @@ export const BanamexPage = () => {
                     <td>{concepto[8]}</td>
                     <td>{`$ ${concepto[7]}`}</td>
                     <td>{`$ ${mensualidad[indice1]}`}</td>
-                    <td>{`M ${concepto[6]}`}</td>
+                    <td>{`${concepto[6]}`}</td>
                   </tr>
                 );
               } else {
