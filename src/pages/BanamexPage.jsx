@@ -193,14 +193,14 @@ export const BanamexPage = () => {
         }
       }
     );
-    console.log(arrayTotal);
+    
     setSuma(
       arrayTotal.reduce(
         (acumulador, valorActual) => acumulador + valorActual,
         0
       )
     );
-    console.log(suma);
+    
     dispatch(setTotalTemporal1(suma));
   };
 
@@ -235,9 +235,9 @@ export const BanamexPage = () => {
     );
   }, [newConcept, redibujar]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(apareceMsi);
-  }, [newConcept]);
+  }, [newConcept]); */
 
   /* useEffect(() => {
     console.log(`Conceptos Banamex ${conceptosBanamex}`);
