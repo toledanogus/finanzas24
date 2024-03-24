@@ -71,12 +71,24 @@ export const GeneralesPage = () => {
     navigate("/banamex");
   };
 
+  const aInicio = () => {
+    navigate("/inicio");
+  };
+
+  const aGenerales = () => {
+    navigate("/generales");
+  };
+
   /* EFECTOS *******************************************************/
+  useEffect(() => {
+    const qMes = localStorage.getItem("mesG");
+    dispatch(seleccionQuincenaMes(qMes));
+  }, []);
+
   useEffect(() => {
     if (conceptos !== 1) {
       sumarTotal2();
     }
-    
   }, [conceptos]);
 
   useEffect(() => {
@@ -85,7 +97,6 @@ export const GeneralesPage = () => {
 
   useEffect(() => {
     dispatch(getConceptos());
-    
   }, [checkedItems, redibujar]);
 
   useEffect(() => {
@@ -98,7 +109,7 @@ export const GeneralesPage = () => {
 
   return (
     <>
-      <h3>{`Quincena: ${quincenaOk.replace(/(\d+)([a-zA-Z]+)/, "$1º $2")}`}</h3>
+      <h3>{`Quincena: ${quincena.replace(/(\d+)([a-zA-Z]+)/, "$1º $2")}`}</h3>
       <table>
         <thead>
           <tr>
@@ -184,6 +195,13 @@ export const GeneralesPage = () => {
       <RegistrarGasto />
       {/*  <div>{redibujar}</div>
       <button onClick={aBanamex}>A Banamex</button> */}
+
+      <button className="navegacion" onClick={aInicio}>
+        Selección de mes
+      </button>
+      <button className="navegacion" onClick={aBanamex}>
+        Tarjeta Banamex
+      </button>
     </>
   );
 };

@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { getMsi, writeTotalBanamex } from "../store/slices/thunks";
 import { RegistroBanamex } from "./components/RegistroBanamex";
 import { setRedibujar } from "../store/slices/registroBanamex";
+import { seleccionQuincenaMes } from "../store/slices/generalesSlice";
+import { useNavigate } from "react-router-dom";
 
 export const BanamexPage = () => {
   const { conceptosBanamex, conceptosBanamexProcesados, mensualidad } =
@@ -22,6 +24,8 @@ export const BanamexPage = () => {
   const [mensualidadPagar, setMensualidadPagar] = useState([]);
   const [newConcept, setNewConcept] = useState([]);
   const [suma, setSuma] = useState(0);
+  const navigate = useNavigate();
+ 
   let quin;
   let mes;
   //Funciones***************************************************
@@ -193,21 +197,32 @@ export const BanamexPage = () => {
         }
       }
     );
-    
+
     setSuma(
       arrayTotal.reduce(
         (acumulador, valorActual) => acumulador + valorActual,
         0
       )
     );
-    
     dispatch(setTotalTemporal1(suma));
   };
 
   const enviarTotal = () => {
     dispatch(writeTotalBanamex());
   };
+
+  const aInicio = () => {
+    navigate("/inicio");
+  }
+
+  const aGenerales = () => {
+    navigate("/generales");
+  }
   //Efectos*********************************************************
+  useEffect(() => {
+    const qMes = localStorage.getItem("mesG");
+    dispatch(seleccionQuincenaMes(qMes));
+  }, []);
 
   useEffect(() => {
     dispatch(getMsi()); //Escribe conceptosBanamex del thunks
@@ -300,6 +315,9 @@ export const BanamexPage = () => {
       <RegistroBanamex />
       {/* <div>mensualidad del slice {mensualidad}</div> */}
       <button onClick={enviarTotal}>Enviar a Base</button>
+      <br />
+      <button className="navegacion" onClick={aInicio}>Selección de mes</button>
+      <button className="navegacion" onClick={aGenerales}>Gastos generales</button>
     </>
   );
 };

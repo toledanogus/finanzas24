@@ -85,7 +85,7 @@ export const RegistroBanamex = () => {
         <thead>
           <tr>
             <th colSpan="2" id="titulo">
-              Registrar nuevo gasto MSI
+              Registrar nuevo gasto A MSI
             </th>
           </tr>
         </thead>
@@ -103,7 +103,7 @@ export const RegistroBanamex = () => {
             </td>
           </tr>
           <tr>
-            <td>Número de meses:</td>
+            <td># meses:</td>
             <td>
               <input
                 type="number"

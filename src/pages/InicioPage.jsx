@@ -50,7 +50,7 @@ export const InicioPage = () => {
         type="button"
         onClick={() => {
           dispatch(seleccionQuincenaMes(seleccion));
-          localStorage.setItem("mesG", quincena);
+          localStorage.setItem("mesG", seleccion);
           siguiente();
         }}
       >
