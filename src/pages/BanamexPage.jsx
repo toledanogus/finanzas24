@@ -123,36 +123,29 @@ export const BanamexPage = () => {
       const aCuantosMeses = mesD[3];
       const compradoEn = `Q${mesD[5].replace(/(\d+)([a-zA-Z]+)/, "$1º- $2")}`;
 
-
       if (mesD[4] % 2 === 0) {
         qRegistro = Math.floor((mesD[4] + 1) / 2) + 2;
-        console.log(`qRegistro par ${qRegistro}`);
       } else {
         qRegistro = Math.floor(mesD[4] / 2) + 2;
-        console.log(`qRegistro non ${qRegistro}`);
       }
 
-
-
-      
       /*  if (quin % 2 === 0 && mesD[3] >= 2) {
         quinAMes = 
       } */
-      
+
       if (quin % 2 === 0 && mesD[3] >= 2) {
-        
         quinAMes = Math.floor((quin + 1) / 2) + 1;
-        console.log(`quinAMes Par  ${quinAMes}`);
-        restantes= quinAMes - qRegistro +1;
+
+        restantes = quinAMes - qRegistro + 1;
         /* console.log(`qRegistro para TRABAJAR ${qRegistro} quin ${quin}`); */
       } else if (quin % 2 != 0 && mesD[3] >= 2) {
         quinAMes = Math.floor(quin / 2) + 1;
-        console.log(`quinAMes Non  ${quinAMes}`);
-        restantes= quinAMes - qRegistro +1;
+
+        restantes = quinAMes - qRegistro + 1;
       } else {
         restantes = 1;
       }
-      
+
       //debo = mesD2 Total    mesD2/mesD3 parcialidades
       if (mesD[3] >= 2) {
         debo = mesD[2] - (mesD[2] / mesD[3]) * restantes + mesD[2] / mesD[3];
@@ -162,11 +155,8 @@ export const BanamexPage = () => {
       } else {
         debo = mesD[2];
       }
-      
-      if (
-        quinAMes >= qRegistro && quinAMes + 1 <= qRegistro + mesD[3] &&
-        mesD[3] >= 2
-      ) {
+
+      if (quinAMes >= qRegistro && quinAMes + 1 <= qRegistro + mesD[3]) {
         apareceMsi = true;
       } else {
         apareceMsi = false;
@@ -249,10 +239,10 @@ export const BanamexPage = () => {
     console.log(apareceMsi);
   }, [newConcept]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(`Conceptos Banamex ${conceptosBanamex}`);
     console.log(`Conceptos Procesados ${conceptosBanamexProcesados}`);
-  }, [conceptosBanamex, conceptosBanamexProcesados]);
+  }, [conceptosBanamex, conceptosBanamexProcesados]); */
 
   return (
     <>

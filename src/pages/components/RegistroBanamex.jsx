@@ -40,10 +40,10 @@ export const RegistroBanamex = () => {
     dispatch(unaExhibicion({ concepto1: concepto1, cantidad1: cantidad1 }));
     dispatch(writeBanamex1());
     dispatch(setRedibujar({ redibujar: Number(redibujar) + 1 }));
-    setConcepto1('');
-    setCantidad1('');
-    alert('Registro exitoso');
-  }
+    setConcepto1("");
+    setCantidad1("");
+    alert("Registro exitoso");
+  };
   return (
     <>
       <table>
@@ -70,8 +70,10 @@ export const RegistroBanamex = () => {
           <tr>
             <button
               onClick={
-                concepto1 != "" && cantidad1 != "" ?
-               registroUnaExhibicion : null }
+                concepto1 != "" && cantidad1 != ""
+                  ? registroUnaExhibicion
+                  : null
+              }
             >
               Registrar
             </button>
@@ -113,22 +115,26 @@ export const RegistroBanamex = () => {
           <tr>
             <button
               onClick={
-                concepto2 !="" && cantidad2 !="" && numeroMeses != "" ?
-                () => {
-                dispatch(
-                  mesesSinIntereses({
-                    concepto2: concepto2,
-                    cantidad2: cantidad2,
-                    numeroMeses: numeroMeses,
-                  })
-                );
-                dispatch(writeBanamexMsi());
-                dispatch(setRedibujar({ redibujar: Number(redibujar) + 1 }));
-                setCantidad2('');
-                setConcepto2('');
-                setNumeroMeses('');
-                alert('Registro exitoso');
-              } : null}
+                concepto2 != "" && cantidad2 != "" && numeroMeses != ""
+                  ? () => {
+                      dispatch(
+                        mesesSinIntereses({
+                          concepto2: concepto2,
+                          cantidad2: cantidad2,
+                          numeroMeses: numeroMeses,
+                        })
+                      );
+                      dispatch(writeBanamexMsi());
+                      dispatch(
+                        setRedibujar({ redibujar: Number(redibujar) + 1 })
+                      );
+                      setCantidad2("");
+                      setConcepto2("");
+                      setNumeroMeses("");
+                      alert("Registro exitoso");
+                    }
+                  : null
+              }
             >
               Registrar
             </button>

@@ -17,17 +17,29 @@ if (mesLocalStorage === null) {
   localStorage.setItem("mesG", valorPredeterminado);
 }
 
-
 export const generalesSlice = createSlice({
   name: "generales",
   initialState: {
-    meses:['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-    quincena: '1Enero',
+    meses: [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ],
+    quincena: "1Enero",
     conceptos: [""],
-    quincenas:[1,2],
+    quincenas: [1, 2],
     pagados: ["nada"],
-    redibujar:[0],
-    totalTemporal2:'',
+    redibujar: [0],
+    totalTemporal2: "",
   },
   reducers: {
     seleccionQuincenaMes: (state, action) => {
@@ -44,9 +56,14 @@ export const generalesSlice = createSlice({
     },
     setTotalTemporal2: (state, action) => {
       state.totalTemporal2 = action.payload;
-    }
+    },
   },
 });
 // Action creators are generated for each case reducer function
-export const { seleccionQuincenaMes, setConceptos, setPagados, setRedibujar, setTotalTemporal2 } =
-  generalesSlice.actions;
+export const {
+  seleccionQuincenaMes,
+  setConceptos,
+  setPagados,
+  setRedibujar,
+  setTotalTemporal2,
+} = generalesSlice.actions;

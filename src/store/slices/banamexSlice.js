@@ -1,20 +1,19 @@
-import {  createSelector, createSlice } from '@reduxjs/toolkit';
-
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const selectGetMsi = (state) => state.getMsi;
 
 export const selectTotalTemporal1 = createSelector(
   [selectGetMsi],
-  (getMsi) => getMsi.totalTemporal1)
+  (getMsi) => getMsi.totalTemporal1
+);
 
 export const getMsiSlice = createSlice({
-name: 'getMsi',
-  initialState:{
+  name: "getMsi",
+  initialState: {
     conceptosBanamex: [],
     conceptosBanamexProcesados: [],
     mensualidad: [],
-    totalTemporal1:'',
-    
+    totalTemporal1: "",
   },
   reducers: {
     setConceptosBanamex: (state, action) => {
@@ -24,12 +23,18 @@ name: 'getMsi',
       state.mensualidad = action.payload.mensualidad;
     },
     setConceptosBanamexProcesados: (state, action) => {
-      state.conceptosBanamexProcesados = action.payload.conceptosBanamexProcesados;
+      state.conceptosBanamexProcesados =
+        action.payload.conceptosBanamexProcesados;
     },
     setTotalTemporal1: (state, action) => {
       state.totalTemporal1 = action.payload;
-    }
+    },
   },
-})
+});
 // Action creators are generated for each case reducer function
-export const { setConceptosBanamex, setMensualidad, setConceptosBanamexProcesados, setTotalTemporal1 } = getMsiSlice.actions;
+export const {
+  setConceptosBanamex,
+  setMensualidad,
+  setConceptosBanamexProcesados,
+  setTotalTemporal1,
+} = getMsiSlice.actions;

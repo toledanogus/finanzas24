@@ -17,9 +17,9 @@ export const selectCantidad1 = createSelector(
   (registroBanamex) => registroBanamex.cantidad1
 );
 export const selectCantidad2 = createSelector(
-    [selectRegistroBanamex],
-    (registroBanamex) => registroBanamex.cantidad2
-  );
+  [selectRegistroBanamex],
+  (registroBanamex) => registroBanamex.cantidad2
+);
 
 export const selectNumeroMeses = createSelector(
   [selectRegistroBanamex],
@@ -48,7 +48,7 @@ export const registroBanamexSlice = createSlice({
     },
     setRedibujar: (state, action) => {
       state.redibujar = action.payload.redibujar;
-    }
+    },
   },
 });
 // Action creators are generated for each case reducer function

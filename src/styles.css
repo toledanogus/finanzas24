@@ -1,7 +1,6 @@
 body {
   background-color: #fffcf9;
   text-align: center;
-  
 }
 
 table {
@@ -31,7 +30,7 @@ td {
 }
 
 .total {
-    color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
   background-color: #db6816;
   border-top: 1px solid #000000;
   padding-top: 8px;
@@ -39,7 +38,8 @@ td {
   font-weight: bold;
 }
 
-.arrow, .banamextotal {
+.arrow,
+.banamextotal {
   color: #00967d;
   font-weight: bold;
 }
@@ -64,11 +64,10 @@ h3 {
   margin-right: auto;
 }
 
-
-.titulotabla{
-    background-color: #83D4A9;
+.titulotabla {
+  background-color: #83d4a9;
 }
 
 select {
-    margin: 20px;
+  margin: 20px;
 }

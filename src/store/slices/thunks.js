@@ -1,5 +1,14 @@
-import { selectPagados, selectQuincena, setConceptos, setTotalTemporal2 } from "./generalesSlice";
-import { selectTotalTemporal1, setConceptosBanamex, setTotalTemporal1 } from "./banamexSlice";
+import {
+  selectPagados,
+  selectQuincena,
+  setConceptos,
+  setTotalTemporal2,
+} from "./generalesSlice";
+import {
+  selectTotalTemporal1,
+  setConceptosBanamex,
+  setTotalTemporal1,
+} from "./banamexSlice";
 import { banamexApi } from "../../api/banamexApi";
 import {
   selectCantidad1,
@@ -9,9 +18,7 @@ import {
   selectNumeroMeses,
   unaExhibicion,
 } from "./registroBanamex";
-import {registroBanamexApi} from "../../api/registroBanamexApi";
-
-
+import { registroBanamexApi } from "../../api/registroBanamexApi";
 
 export const getConceptos = () => {
   // eslint-disable-next-line no-unused-vars
@@ -81,10 +88,9 @@ export const getMsi = () => {
     const quincena2 = selectQuincena(getState());
     let jsonQuincena2 = new Object();
     jsonQuincena2["quincena"] = quincena2;
-    console.log(`Quincena actual ${JSON.stringify(jsonQuincena2)}`);
 
     const { data } = await banamexApi.post(`/recibirMsi.php`, jsonQuincena2);
-    console.log(`A ver qué trae ${JSON.stringify(data)}`);
+
     dispatch(setConceptosBanamex({ conceptosBanamex: data }));
   };
 };
@@ -99,54 +105,61 @@ export const writeBanamex1 = () => {
     jsonUnaExhibicion["newValue"] = can1;
     jsonUnaExhibicion["quincena"] = quin;
 
-    const { data } = await registroBanamexApi.post(`/registrarBanamex.php`, jsonUnaExhibicion);
-    console.log(`A ver qué trae ${JSON.stringify(data)}`);
-    
+    const { data } = await registroBanamexApi.post(
+      `/registrarBanamex.php`,
+      jsonUnaExhibicion
+    );
   };
 };
 
 export const writeBanamexMsi = () => {
-  return async (dispatch, getState) =>{
+  return async (dispatch, getState) => {
     const con2 = selectConcepto2(getState());
     const can2 = selectCantidad2(getState());
     const quin = selectQuincena(getState());
     const aMeses = selectNumeroMeses(getState());
     let jsonMsi = new Object();
-    jsonMsi['newConcept']= con2;
-    jsonMsi['newValue']= can2;
-    jsonMsi['quincena']= quin;
-    jsonMsi['aMeses']= aMeses;
+    jsonMsi["newConcept"] = con2;
+    jsonMsi["newValue"] = can2;
+    jsonMsi["quincena"] = quin;
+    jsonMsi["aMeses"] = aMeses;
 
-    const {data} = await registroBanamexApi.post(`/registrarBanamexMsi.php`, jsonMsi);
-    console.log(JSON.stringify(data));
+    const { data } = await registroBanamexApi.post(
+      `/registrarBanamexMsi.php`,
+      jsonMsi
+    );
   };
 };
 
 export const writeTotalBanamex = () => {
-  return async (dispatch, getState) =>{
+  return async (dispatch, getState) => {
     const quantity = selectTotalTemporal1(getState());
-    console.log(`Cantidad al Mysql ${quantity}`);
+
     const quin = selectQuincena(getState());
-    
+
     let jsonwtb = new Object();
-    jsonwtb['cantidad']= quantity;
-    jsonwtb['quincena']= quin;
-    
-    const {data} = await registroBanamexApi.post(`/registrarTotal.php`, jsonwtb);
-    console.log(JSON.stringify(data));
+    jsonwtb["cantidad"] = quantity;
+    jsonwtb["quincena"] = quin;
+
+    const { data } = await registroBanamexApi.post(
+      `/registrarTotal.php`,
+      jsonwtb
+    );
   };
 };
 
 export const getTotalBanamex = () => {
-  return async (dispatch, getState) =>{
+  return async (dispatch, getState) => {
     const quin = selectQuincena(getState());
-    
+
     let jsonwtb = new Object();
-    jsonwtb['quincena']= quin;
-    
-    const {data} = await registroBanamexApi.post(`/getTotalBanamex.php`, jsonwtb);
-    console.log(JSON.stringify(data));
+    jsonwtb["quincena"] = quin;
+
+    const { data } = await registroBanamexApi.post(
+      `/getTotalBanamex.php`,
+      jsonwtb
+    );
+
     dispatch(setTotalTemporal2(data));
   };
-}
-
+};

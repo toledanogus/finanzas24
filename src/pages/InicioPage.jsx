@@ -4,40 +4,35 @@ import { seleccionQuincenaMes } from "../store/slices/generalesSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 export const InicioPage = () => {
   const { meses, quincenas, quincena } = useSelector(
     (state) => state.generales
   );
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [seleccion, setSeleccion] = useState('');
-  
-    
-const onHandleChange= (event) => {
-  setSeleccion(event.target.value);
-}
+  const [seleccion, setSeleccion] = useState("");
 
-const siguiente = () => {
-navigate("/generales"); 
-}
+  const onHandleChange = (event) => {
+    setSeleccion(event.target.value);
+  };
 
+  const siguiente = () => {
+    navigate("/generales");
+  };
 
-useEffect(() => {
-  let mesLocalStorage = localStorage.getItem('mesG');
-   
-  if (mesLocalStorage != null) {
-    console.log(mesLocalStorage)
-  }
-  else {
-    dispatch(seleccionQuincenaMes('1Enero'));
-    console.log(mesLocalStorage);
-  }
-},);
+  useEffect(() => {
+    let mesLocalStorage = localStorage.getItem("mesG");
 
-useEffect(() => {
-  setSeleccion(quincena);
-}, [quincena])
+    if (mesLocalStorage != null) {
+      return;
+    } else {
+      dispatch(seleccionQuincenaMes("1Enero"));
+    }
+  });
+
+  useEffect(() => {
+    setSeleccion(quincena);
+  }, [quincena]);
 
   return (
     <>
@@ -51,11 +46,14 @@ useEffect(() => {
           ))
         )}
       </select>
-      <button type="button" onClick={() => {dispatch(seleccionQuincenaMes(seleccion));
-      localStorage.setItem('mesG', quincena);
-      siguiente();
-      
-    }}>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(seleccionQuincenaMes(seleccion));
+          localStorage.setItem("mesG", quincena);
+          siguiente();
+        }}
+      >
         Seleccionar
       </button>
       {/* <div>Quincena: {quincena}</div> */}

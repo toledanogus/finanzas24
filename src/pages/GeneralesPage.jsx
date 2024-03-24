@@ -27,7 +27,7 @@ export const GeneralesPage = () => {
   const [url, setUrl] = useState("./php/test.php");
   const { data, hasError, isLoading } = useFetch(url);
   const navigate = useNavigate();
-  const [quincenaOk, setQuincenaOk] = useState('');
+  const [quincenaOk, setQuincenaOk] = useState("");
 
   /* FUNCIONES**************************************************************** */
 
@@ -91,9 +91,8 @@ export const GeneralesPage = () => {
   }, []);
 
   useEffect(() => {
-    setQuincenaOk(quincena)
+    setQuincenaOk(quincena);
   }, []);
-  
 
   return (
     <>
@@ -119,7 +118,7 @@ export const GeneralesPage = () => {
               <td>
                 {concepto[1] && concepto[1]
                   ? `$${concepto[1].toLocaleString()}`
-                  : '—'}
+                  : "—"}
               </td>
               <td>
                 {concepto[2] === 0 ? (
@@ -131,31 +130,32 @@ export const GeneralesPage = () => {
                   />
                 ) : null}
               </td>
-              <td>{concepto[2] ? <span className="arrow">✓</span>  : "No pagado"}</td>
-
+              <td>
+                {concepto[2] ? <span className="arrow">✓</span> : "No pagado"}
+              </td>
             </tr>
           ))}
         </tbody>
         <tfoot>
           <tr>
             <td className="total">Total</td>
-            <td className="total">{total2 && total2 ? `$${total2.toLocaleString()}` : null}</td>
+            <td className="total">
+              {total2 && total2 ? `$${total2.toLocaleString()}` : null}
+            </td>
           </tr>
           <tr>
             <td>
               <button
-        onClick={() => {
-          enviarPagados().then(() => dispatch(getConceptos()));
-        }}
-      >
-        Registrar Pagos
-      </button>
+                onClick={() => {
+                  enviarPagados().then(() => dispatch(getConceptos()));
+                }}
+              >
+                Registrar Pagos
+              </button>
             </td>
           </tr>
         </tfoot>
       </table>
-
-      
 
       <table>
         <thead>
