@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -74,7 +76,7 @@ export const GeneralesPage = () => {
     if (conceptos !== 1) {
       sumarTotal2();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [conceptos]);
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export const GeneralesPage = () => {
 
   useEffect(() => {
     dispatch(getConceptos());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [checkedItems, redibujar]);
 
   useEffect(() => {

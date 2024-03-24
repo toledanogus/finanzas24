@@ -38,7 +38,7 @@ export const generalesSlice = createSlice({
     conceptos: [""],
     quincenas: [1, 2],
     pagados: ["nada"],
-    redibujar: [0],
+    redibujar: 0,
     totalTemporal2: "",
   },
   reducers: {
