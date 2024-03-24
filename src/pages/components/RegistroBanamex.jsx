@@ -50,7 +50,7 @@ export const RegistroBanamex = () => {
         <thead>
           <tr>
             <th colSpan="2" id="titulo">
-              Registrar nuevo gasto en una exhibición
+              Registrar nuevo gasto 1 exhibición
             </th>
           </tr>
         </thead>

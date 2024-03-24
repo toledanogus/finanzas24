@@ -17,7 +17,7 @@ table {
 
 th,
 .total {
-  text-transform: uppercase;
+  text-transform: capitalize;
   padding: 5px;
   background-color: #f5b82a;
   color: black;
