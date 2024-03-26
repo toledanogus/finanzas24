@@ -29,6 +29,7 @@ export const GeneralesPage = () => {
   const { data, hasError, isLoading } = useFetch(url);
   const navigate = useNavigate();
   const [quincenaOk, setQuincenaOk] = useState("");
+  const [render, setRender] = useState(0);
 
   /* FUNCIONES**************************************************************** */
 
@@ -93,6 +94,7 @@ export const GeneralesPage = () => {
 
   useEffect(() => {
     dispatch(getConceptos());
+    setRender(render+1);
   }, [checkedItems, redibujar]);
 
   useEffect(() => {

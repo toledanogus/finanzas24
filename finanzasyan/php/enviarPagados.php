@@ -12,7 +12,7 @@ require 'switch.php';
 if ($xp && isset($xp->pagados) && is_array($xp->pagados)) {
     foreach ($xp->pagados as $concepto) {
         // Realiza la consulta SQL para actualizar el campo pagado a 1 para el concepto específico
-        $query = "UPDATE conceptos SET pagado = 1 WHERE Concepto = ? AND QuincenaID = $quin";
+        $query = "UPDATE conceptosyan SET pagado = 1 WHERE Concepto = ? AND QuincenaID = $quin";
 
         // Prepara la sentencia
         $stmt = mysqli_prepare($conn, $query);
