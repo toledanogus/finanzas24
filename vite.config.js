@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   base: "./",
   build: {
-    outDir: './finanzas24gtl', //finanzas24gtl
+    outDir: './finanzasyan', //finanzas24gtl
   }
 })

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getConceptos,
-  getTotalBanamex,
   sendPagados,
 } from "../store/slices/thunks";
 import {
@@ -67,10 +66,7 @@ export const GeneralesPage = () => {
     setDatosCargados(false);
   };
 
-  const aBanamex = () => {
-    navigate("/banamex");
-  };
-
+  
   const aInicio = () => {
     navigate("/inicio");
   };
@@ -98,10 +94,6 @@ export const GeneralesPage = () => {
   useEffect(() => {
     dispatch(getConceptos());
   }, [checkedItems, redibujar]);
-
-  useEffect(() => {
-    dispatch(getTotalBanamex());
-  }, []);
 
   useEffect(() => {
     setQuincenaOk(quincena);
@@ -170,37 +162,12 @@ export const GeneralesPage = () => {
         </tfoot>
       </table>
 
-      <table>
-        <thead>
-          <tr>
-            <th colSpan="4">Tarjeta Banamex</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <button onClick={aBanamex}>Banamex</button>{" "}
-            </td>
-            <td className="banamextotal">
-              {totalTemporal2 && totalTemporal2
-                ? `$${totalTemporal2.toLocaleString()}`
-                : null}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      {/*  <div>{pagados && pagados}</div>
-      <h2>{data}</h2> */}
-      {/* <button onClick={CambiarUrl}>CambiarUrl</button> */}
       <RegistrarGasto />
       {/*  <div>{redibujar}</div>
       <button onClick={aBanamex}>A Banamex</button> */}
 
       <button className="navegacion" onClick={aInicio}>
         Selección de mes
-      </button>
-      <button className="navegacion" onClick={aBanamex}>
-        Tarjeta Banamex
       </button>
     </>
   );
